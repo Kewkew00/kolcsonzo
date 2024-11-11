@@ -91,7 +91,7 @@ console.log(CryptoJS.SHA1(passwd).toString())
         req.session.userRole = results[0].role;
 
       //  console.log(req.session);
-        res.redirect('/chart');
+        res.redirect('/table');
         return
     });
 });

@@ -29,6 +29,22 @@ router.get('/reg', (req, res) => {
     });
 });
 
+router.get('/table', (req, res)=>{
+    if (req.session.isLoggedIn){
+        let today = moment(new Date()).format('YYYY-MM-DD');
+        ejs.renderFile('./views/table.ejs', { session: req.session, today }, (err, html)=>{
+            if (err){
+                console.log(err);
+                return
+            }
+            req.session.msg = '';
+            res.send(html);
+        });
+        return
+    }
+    res.redirect('/');
+});
+
 router.get('/logout', (req, res)=>{
 
     req.session.isLoggedIn = false;
