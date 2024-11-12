@@ -72,6 +72,17 @@ router.get('/table', (req, res)=>{
     res.redirect('/');
 });
 
+router.get('/newdata', (req, res) => {
+    ejs.renderFile('./views/newdata.ejs', { session: req.session}, (err, html)=>{
+        if (err){
+            console.log(err);
+            return
+        }
+        req.session.msg = '';
+        res.send(html);
+    });
+});
+
 router.get('/logout', (req, res)=>{
 
     req.session.isLoggedIn = false;

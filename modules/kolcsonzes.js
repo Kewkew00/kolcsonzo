@@ -4,16 +4,16 @@ const uuid = require('uuid');
 const router = express.Router();
 
 router.post('/newdata', (req, res)=>{
-     let { date, stepcount } = req.body;
+     let { title, type } = req.body;
 
-     if (!date || !stepcount) {
+     if (!title || !type) {
         req.session.msg = 'Missing data!';
         req.session.severity = 'danger';
         res.redirect('/newdata');
         return
     }
 
-    db.query(`SELECT * FROM rentals WHERE user_id=? AND date=?`, [req.session.userID, date], (err, results) => {
+    db.query(`SELECT * FROM items WHERE item_id=?`, [req.session.userID], (err, results) => {
         if (err){
             req.session.msg = 'Database error!';
             req.session.severity = 'danger';
@@ -23,7 +23,7 @@ router.post('/newdata', (req, res)=>{
 
         if (results.length > 0){
             // update
-            db.query(`UPDATE rentals SET count = count + ? WHERE ID=?`, (err, results)=>{
+            db.query(`UPDATE items SET title, type WHERE ID=?`, (err, results)=>{
                 if (err){
                     req.session.msg = 'Database error!';
                     req.session.severity = 'danger';
@@ -37,7 +37,7 @@ router.post('/newdata', (req, res)=>{
             });
         }else{
             // insert
-            db.query(`INSERT INTO rentals VALUES(?,?,?,?)`, [uuid.v4(), req.session.userID, item_id, rental_date, return_date], (err, results)=>{
+            db.query(`INSERT INTO items VALUES(?,?,?,?)`, [item_id ,title, type, available], (err, results)=>{
                 if (err){
                     req.session.msg = 'Database error!';
                     req.session.severity = 'danger';

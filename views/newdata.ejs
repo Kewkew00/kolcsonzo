@@ -1,0 +1,20 @@
+<%- include('header') %>
+<h4 class="mb-3">Új targy felvetele</h4>
+
+<%- include('message') %>
+
+<form action="/newdata" method="post">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" name="title" placeholder="">
+        <label for="title">Cím</label>
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" name="type" id="floatingSelect" aria-label="Floating label select example">
+          <option value="könyv">könyv</option>
+          <option value="film">film</option>
+        </select>
+        <label for="type">Tipus</label>
+      </div>
+    <input class="btn btn-primary mb-3" type="submit" value="Felvétel" name="addBtn">
+</form>
+<%- include('footer') %>
