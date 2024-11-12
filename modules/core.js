@@ -17,9 +17,36 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/table', (req, res) => {
+    if (req.session.isLoggedIn) {
+        db.query(`
+            SELECT * FROM items WHERE available = 1`,(err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            results.forEach(item => {
+                item.title = item.title
+                    item.available = 'elérhető'
+            });
+ 
+            ejs.renderFile('./views/table.ejs', { session: req.session, results }, (err, html) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                req.session.msg = '';
+                res.send(html);
+            });
+        });
+        return;
+    }
+    res.redirect('/');
+});
+ 
 
 router.get('/reg', (req, res) => {
-    ejs.renderFile('./views/regist.ejs', { session: req.session }, (err, html)=>{
+    ejs.renderFile('./views/regist.ejs', { session: req.session}, (err, html)=>{
         if (err){
             console.log(err);
             return

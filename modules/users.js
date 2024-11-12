@@ -4,6 +4,8 @@ var CryptoJS = require("crypto-js");
 const uuid = require('uuid');
 const router = express.Router();
 const passwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+const moment = require('moment');
+let today = moment(new Date()).format('YYYY-MM-DD');
 
 
 // USER routes
@@ -41,7 +43,7 @@ router.post('/reg', (req, res) => {
             return
         }
 
-        db.query(`INSERT INTO users (ID, name, email, passwd, role) VALUES(?, ?, ?, SHA1(?), 'user')`, 
+        db.query(`INSERT INTO users (ID, name, email, passwd, membership_date, role) VALUES(?, ?, ?, SHA1(?), ${today}, 'user')`, 
             [uuid.v4(), name, email, passwd], (err, results)=>{
             if (err){
                 req.session.msg = 'Database error!';

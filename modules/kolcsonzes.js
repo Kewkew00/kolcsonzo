@@ -30,7 +30,7 @@ router.post('/newdata', (req, res)=>{
                     res.redirect('/newdata');
                     return
                 }
-                req.session.msg = 'Stepdata updated!';
+                req.session.msg = 'Rentaldata updated!';
                 req.session.severity = 'success';
                 res.redirect('/newdata');
                 return
@@ -44,7 +44,7 @@ router.post('/newdata', (req, res)=>{
                     res.redirect('/newdata');
                     return
                 }
-                req.session.msg = 'Stepdata inserted!';
+                req.session.msg = 'Rentaldata inserted!';
                 req.session.severity = 'success';
                 res.redirect('/newdata');
                 return
